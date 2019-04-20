@@ -13,7 +13,7 @@ namespace Collector.Controllers
         [HttpPost]
         [HttpGet]
         [Route("api/Collect")]
-        public IActionResult Collect()
+        public IActionResult Collect([FromBody] string content)
         {
             var acceptedResponse = new AcceptedResponse();
             acceptedResponse.itemsAccepted = 1;
