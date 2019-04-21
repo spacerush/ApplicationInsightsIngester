@@ -1,4 +1,4 @@
-﻿using Collector.EFModel;
+﻿using Collector.Models;
 using Collector.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,21 +9,20 @@ namespace Collector.Services
 {
     public class CustomTelemetryService : ICustomTelemetryService
     {
-        private readonly IRepoWrapper repoWrapper;
+        private readonly IRepositoryWrapper repositoryWrapper;
 
-        public CustomTelemetryService(IRepoWrapper repositoryWrapper)
+        public CustomTelemetryService(IRepositoryWrapper repositoryWrapper)
         {
-            this.repoWrapper = repositoryWrapper;
+            this.repositoryWrapper = repositoryWrapper;
         }
 
         public void RecordTelemetry(string telemetry, string applicationId)
         {
-            TelemetryLog telemetryLog = new TelemetryLog();
-            telemetryLog.TelemetryData = telemetry;
-            telemetryLog.UtcDate = DateTime.UtcNow;
-            telemetryLog.ApplicationId = applicationId;
-            this.repoWrapper.TelemetryLogRepository.Create(telemetryLog);
-            this.repoWrapper.Save();
+            TelemetryContainer telemetryContainer = new TelemetryContainer();
+            telemetryContainer.TelemetryData = telemetry;
+            telemetryContainer.UtcDate = DateTime.UtcNow;
+            telemetryContainer.ApplicationId = applicationId;
+            this.repositoryWrapper.TelemetryRepository.AddOne<TelemetryContainer>(telemetryContainer);
         }
     }
 }

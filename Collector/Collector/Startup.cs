@@ -33,8 +33,6 @@ namespace Collector
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<EFModel.ApptelemetryContext>(o => o.UseSqlServer(Configuration.GetConnectionString("TelemetryContext")));
-
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();
 

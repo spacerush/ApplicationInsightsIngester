@@ -12,7 +12,7 @@ namespace Collector
     {
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
-            services.AddScoped<IRepoWrapper, RepoWrapper>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
         public static void AddCustomTelemetryService(this IServiceCollection services)
