@@ -22,10 +22,10 @@ namespace Collector.Controllers
         [HttpPost]
         [HttpGet]
         [Route("api/Collect")]
-        public IActionResult Collect()
+        public IActionResult Collect([FromHeader] string appId)
         {
             string requestbody = Request.GetRawBodyStringAsync().Result;
-            this.customTelemetryService.RecordTelemetry(requestbody);
+            this.customTelemetryService.RecordTelemetry(requestbody, appId);
 
             var acceptedResponse = new AcceptedResponse();
             acceptedResponse.itemsAccepted = 1;

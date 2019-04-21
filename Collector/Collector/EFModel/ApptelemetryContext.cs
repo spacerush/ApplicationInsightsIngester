@@ -30,6 +30,16 @@ namespace Collector.EFModel
 
             modelBuilder.Entity<TelemetryLog>(entity =>
             {
+                entity.HasIndex(e => e.ApplicationId);
+
+                entity.HasIndex(e => e.UtcDate);
+
+                entity.HasIndex(e => new { e.UtcDate, e.ApplicationId });
+
+                entity.Property(e => e.ApplicationId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UtcDate).HasColumnType("datetime");
             });
 

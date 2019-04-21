@@ -16,11 +16,12 @@ namespace Collector.Services
             this.repoWrapper = repositoryWrapper;
         }
 
-        public void RecordTelemetry(string telemetry)
+        public void RecordTelemetry(string telemetry, string applicationId)
         {
             TelemetryLog telemetryLog = new TelemetryLog();
             telemetryLog.TelemetryData = telemetry;
             telemetryLog.UtcDate = DateTime.UtcNow;
+            telemetryLog.ApplicationId = applicationId;
             this.repoWrapper.TelemetryLogRepository.Create(telemetryLog);
             this.repoWrapper.Save();
         }
