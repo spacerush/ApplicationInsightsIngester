@@ -44,6 +44,10 @@ namespace Collector
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // see https://www.billbogaiv.com/posts/net-core-hosted-on-subdirectories-in-nginx for more information about this .UsePathBase
+            // to my knowledge the leading forward slash is important! see appsettings.json.
+            app.UsePathBase(Configuration["pathBase"]);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
