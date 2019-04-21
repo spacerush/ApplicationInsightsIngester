@@ -56,8 +56,11 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="TelemetryLogs.sql" />
+    <Build Include="StoredProcedures\GetReportedTelemetry.sql" />
+    <Build Include="Tables\TelemetryLogs.sql" />
   </ItemGroup>
 </Project>

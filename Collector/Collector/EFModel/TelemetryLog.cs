@@ -6,6 +6,7 @@ namespace Collector.EFModel
     public partial class TelemetryLog
     {
         public long TelemetryLogId { get; set; }
+        public DateTime UtcDate { get; set; }
         public string TelemetryData { get; set; }
     }
 }

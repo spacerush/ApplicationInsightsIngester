@@ -20,6 +20,7 @@ namespace Collector.Services
         {
             TelemetryLog telemetryLog = new TelemetryLog();
             telemetryLog.TelemetryData = telemetry;
+            telemetryLog.UtcDate = DateTime.UtcNow;
             this.repoWrapper.TelemetryLogRepository.Create(telemetryLog);
             this.repoWrapper.Save();
         }
