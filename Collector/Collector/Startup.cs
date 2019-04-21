@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace Collector
 {
@@ -32,6 +33,9 @@ namespace Collector
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            var client = new MongoClient("mongodb://localhost:27017/AppTelemetry");
+            services.AddSingleton<IMongoClient>(c => client);
 
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();

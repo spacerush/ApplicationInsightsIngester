@@ -5,14 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Collector.Models;
+using Collector.Models.ViewModels;
+using Collector.Services;
 
 namespace Collector.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICustomTelemetryService service;
+
+        public HomeController(ICustomTelemetryService service)
+        {
+            this.service = service;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new IndexViewModel(service);
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

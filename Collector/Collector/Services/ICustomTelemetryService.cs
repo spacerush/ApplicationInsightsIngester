@@ -8,5 +8,7 @@ namespace Collector.Services
     public interface ICustomTelemetryService
     {
         void RecordTelemetry(string telemetry, string applicationId);
+
+        long CountTelemetry();
     }
 }

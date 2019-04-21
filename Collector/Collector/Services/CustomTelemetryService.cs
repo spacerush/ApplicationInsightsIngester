@@ -24,5 +24,10 @@ namespace Collector.Services
             telemetryContainer.ApplicationId = applicationId;
             this.repositoryWrapper.TelemetryRepository.AddOne<TelemetryContainer>(telemetryContainer);
         }
+
+        public long CountTelemetry()
+        {
+            return this.repositoryWrapper.TelemetryRepository.Count<TelemetryContainer>(w => w.Id != null);
+        }
     }
 }
