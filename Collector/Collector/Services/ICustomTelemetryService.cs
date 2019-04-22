@@ -18,5 +18,7 @@ namespace Collector.Services
 
         List<string> GetRawEvents(int hours);
 
+        List<TelemetryMetadata> GetMetadata(int hours);
+
     }
 }

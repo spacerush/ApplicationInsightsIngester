@@ -92,5 +92,21 @@ namespace Collector.Services
             }
             return results;
         }
+
+        public List<TelemetryMetadata> GetMetadata(int hours)
+        {
+            List<TelemetryMetadata> results = new List<TelemetryMetadata>();
+            var matches = this.repositoryWrapper.TelemetryRepository.GetAll<TelemetryContainer>(f => f.AddedAtUtc >= DateTime.UtcNow.AddHours(-1 * hours)).ToList();
+            foreach (var item in matches.OrderByDescending(o => o.UtcDate))
+            {
+                var result = new TelemetryMetadata();
+                result.ApplicationId = item.ApplicationId;
+                result.DateTimeOffset = item.UtcDate;
+                result.TelemetryLength = item.TelemetryData.Length;
+                results.Add(result);
+            }
+            return results;
+
+        }
     }
 }
