@@ -10,6 +10,7 @@ namespace Collector.Repositories
     public interface IRepositoryWrapper
     {
         IRepositoryBase<TelemetryContainer> TelemetryRepository { get; }
+        IRepositoryBase<TelemetryKey> TelemetryKeyRepository { get; }
         IRepositoryBase<CollectorUser> UserRepository { get; }
         IRepositoryBase<WebSession> WebSessionRepository { get; }
 

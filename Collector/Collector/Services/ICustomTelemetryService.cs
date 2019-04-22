@@ -1,4 +1,5 @@
 ﻿using Collector.Models;
+using Collector.Models.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,16 @@ namespace Collector.Services
         List<string> GetRawEvents(int hours);
 
         List<TelemetryMetadata> GetMetadata(int hours);
+
+        List<TelemetryKey> GetAllTelemetryKeys();
+
+        void AddTelemetryKey(string applicationId, string username);
+
+        bool CheckTelemetryKey(string applicationId, string keyData);
+
+        void ExpireTelemetryKey(Guid keyId);
+
+        void LogRejectedTelemetry(string applicationId, string keyData, string telemetryData, string reason);
 
     }
 }

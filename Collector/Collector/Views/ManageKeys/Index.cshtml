@@ -1,0 +1,10 @@
+﻿@model Collector.Models.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This telemetry recorder has collected <span id="telemCount">@Model.TelemetryCount</span> pieces of telemetry.</p>
+</div>

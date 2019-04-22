@@ -107,7 +107,53 @@ namespace Collector.Services
                 results.Add(result);
             }
             return results;
-
         }
+
+        public List<TelemetryKey> GetAllTelemetryKeys()
+        {
+            var result = new List<TelemetryKey>();
+            var matches = this.repositoryWrapper.TelemetryKeyRepository.GetAll<TelemetryKey>(f => f.Id != null).ToList();
+            result = matches;
+            return result;
+        }
+
+        public void AddTelemetryKey(string applicationId, string username)
+        {
+            var newKey = new TelemetryKey();
+            newKey.ApplicationId = applicationId;
+            newKey.Expired = false;
+            newKey.ExpireReason = null;
+            newKey.KeyData = Helpers.GenerationHelper.CreateRandomString(true, true, false, 20);
+            newKey.UsernameWhoAdded = username;
+            this.repositoryWrapper.TelemetryKeyRepository.AddOne<TelemetryKey>(newKey);
+        }
+
+        public bool CheckTelemetryKey(string applicationId, string keyData)
+        {
+            bool result = false;
+            var matches = this.repositoryWrapper.TelemetryKeyRepository.GetAll<TelemetryKey>(f => f.ApplicationId == applicationId && f.KeyData == keyData && f.Expired == false).ToList();
+            if (matches.Count > 0)
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        public void ExpireTelemetryKey(Guid keyId)
+        {
+            var match = this.repositoryWrapper.TelemetryKeyRepository.GetOne<TelemetryKey>(f => f.Id == keyId);
+            match.Expired = true;
+            this.repositoryWrapper.TelemetryKeyRepository.UpdateOne<TelemetryKey>(match);
+        }
+
+        public void LogRejectedTelemetry(string applicationId, string keyData, string telemetryData, string reason)
+        {
+            var reject = new RejectedTelemetry();
+            reject.ApplicationId = applicationId;
+            reject.Key = keyData;
+            reject.TelemetryData = telemetryData;
+            reject.RejectionReason = reason;
+        }
+
     }
 }

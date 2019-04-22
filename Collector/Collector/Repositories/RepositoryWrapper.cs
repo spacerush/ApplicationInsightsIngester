@@ -12,6 +12,9 @@ namespace Collector.Repositories
         private readonly IMongoClient _mongoClient;
 
         private IRepositoryBase<TelemetryContainer> telemetryRepository;
+        private IRepositoryBase<TelemetryKey> telemetryKeyRepository;
+        private IRepositoryBase<RejectedTelemetry> rejectedTelemetryRepository;
+
         private IRepositoryBase<CollectorUser> userRepository;
         private IRepositoryBase<WebSession> webSessionRepository;
 
@@ -30,6 +33,30 @@ namespace Collector.Repositories
                     this.telemetryRepository = new RepositoryBase<TelemetryContainer>(_mongoClient);
                 }
                 return this.telemetryRepository;
+            }
+        }
+
+        public IRepositoryBase<TelemetryKey> TelemetryKeyRepository
+        {
+            get
+            {
+                if (this.telemetryKeyRepository == null)
+                {
+                    this.telemetryKeyRepository = new RepositoryBase<TelemetryKey>(_mongoClient);
+                }
+                return this.telemetryKeyRepository;
+            }
+        }
+
+        public IRepositoryBase<RejectedTelemetry> RejectedTelemetryRepository
+        {
+            get
+            {
+                if (this.rejectedTelemetryRepository == null)
+                {
+                    this.rejectedTelemetryRepository = new RepositoryBase<RejectedTelemetry>(_mongoClient);
+                }
+                return this.rejectedTelemetryRepository;
             }
         }
 

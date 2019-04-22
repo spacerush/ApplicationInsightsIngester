@@ -22,18 +22,34 @@ namespace Collector.Controllers
         [HttpPost]
         [HttpGet]
         [Route("api/Collect")]
-        public IActionResult Collect([FromHeader] string appId)
+        public IActionResult Collect([FromHeader] string appId, [FromHeader] string appKey)
         {
-            string requestbody = Request.GetRawBodyStringAsync().Result;
-            this.customTelemetryService.RecordTelemetry(requestbody, appId);
+            if (this.customTelemetryService.CheckTelemetryKey(appId, appKey))
+            {
+                string requestbody = Request.GetRawBodyStringAsync().Result;
+                this.customTelemetryService.RecordTelemetry(requestbody, appId);
 
-            var acceptedResponse = new AcceptedResponse();
-            acceptedResponse.itemsAccepted = 1;
-            acceptedResponse.itemsReceived = 1;
-            acceptedResponse.errors = new List<string>();
-            var result = new JsonResult(acceptedResponse);
-            result.StatusCode = 200;
-            return result;
+                var acceptedResponse = new AcceptedResponse();
+                acceptedResponse.itemsAccepted = 1;
+                acceptedResponse.itemsReceived = 1;
+                acceptedResponse.errors = new List<string>();
+                var result = new JsonResult(acceptedResponse);
+                result.StatusCode = 200;
+                return result;
+            }
+            else
+            {
+                string requestbody = Request.GetRawBodyStringAsync().Result;
+                this.customTelemetryService.LogRejectedTelemetry(appId, appKey, requestbody, "Application key incorrect");
+                var acceptedResponse = new AcceptedResponse();
+                acceptedResponse.itemsAccepted = 0;
+                acceptedResponse.itemsReceived = 0;
+                acceptedResponse.errors = new List<string>();
+                acceptedResponse.errors.Add("Cannot process due to incorrect key.");
+                var result = new JsonResult(acceptedResponse);
+                result.StatusCode = 403;
+                return result;
+            }
         }
     }
 }
