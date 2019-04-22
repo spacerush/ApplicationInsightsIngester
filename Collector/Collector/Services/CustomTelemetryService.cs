@@ -1,4 +1,5 @@
 ﻿using Collector.Models;
+using Collector.Models.Documents;
 using Collector.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

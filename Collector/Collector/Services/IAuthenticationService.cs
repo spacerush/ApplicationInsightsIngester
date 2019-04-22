@@ -1,4 +1,5 @@
 ﻿using Collector.Models;
+using Collector.Models.Documents;
 using Collector.Models.ServiceResponse;
 using System;
 using System.Collections.Generic;

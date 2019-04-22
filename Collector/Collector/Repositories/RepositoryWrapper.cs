@@ -1,4 +1,5 @@
 ﻿using Collector.Models;
+using Collector.Models.Documents;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
