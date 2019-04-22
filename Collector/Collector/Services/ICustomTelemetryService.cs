@@ -12,6 +12,11 @@ namespace Collector.Services
 
         List<AggregateDependencyDuration> GetDependencyDurations(int hours);
 
+        List<AggregateDependencyDuration> GetLatestDependencyDurations();
+
         long CountTelemetry();
+
+        List<string> GetRawEvents(int hours);
+
     }
 }

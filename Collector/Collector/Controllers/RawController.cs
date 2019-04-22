@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Collector.Models;
 using Collector.Services;
-using Collector.Models.ViewModels.Dependencies;
 using Collector.Models.ViewModels;
 using Collector.Models.ServiceResponse;
 using CookieManager;
+using Collector.Models.ViewModels.Raw;
 
 namespace Collector.Controllers
 {
-    public class DependenciesController : Controller
+    public class RawController : Controller
     {
         private readonly ICustomTelemetryService service;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
 
-        public DependenciesController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public RawController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
             this.service = service;
             this.authenticationService = authenticationService;
@@ -35,9 +35,9 @@ namespace Collector.Controllers
         }
 
         /// <summary>
-        /// Show metrics reported within the last hour
+        /// Show telemetry reported within the last hour
         /// </summary>
-        public IActionResult LastHourMetrics()
+        public IActionResult LastHour()
         {
             string sessionId = this.cookie.Get("TelemetrySession");
             if (string.IsNullOrEmpty(sessionId))
@@ -47,9 +47,9 @@ namespace Collector.Controllers
             else
             {
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
-                if (reportUserByCookie.Success == true)
+                if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LastHourMetricsViewModel(service);
+                    var viewModel = new LastHourRawViewModel(service);
                     return View(viewModel);
                 }
                 else
@@ -61,9 +61,9 @@ namespace Collector.Controllers
         }
 
         /// <summary>
-        /// Show metrics reported within the last day
+        /// Show all telemetry reported within the last day
         /// </summary>
-        public IActionResult LastDayMetrics()
+        public IActionResult LastDay()
         {
             string sessionId = this.cookie.Get("TelemetrySession");
             if (string.IsNullOrEmpty(sessionId))
@@ -73,9 +73,9 @@ namespace Collector.Controllers
             else
             {
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
-                if (reportUserByCookie.Success == true)
+                if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LastDayMetricsViewModel(service);
+                    var viewModel = new LastDayRawViewModel(service);
                     return View(viewModel);
                 }
                 else
@@ -83,12 +83,13 @@ namespace Collector.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
+
         }
 
         /// <summary>
-        /// Show most recent metrics reported
+        /// Show all telemetry reported within the last day
         /// </summary>
-        public IActionResult LatestMetrics()
+        public IActionResult Latest()
         {
             string sessionId = this.cookie.Get("TelemetrySession");
             if (string.IsNullOrEmpty(sessionId))
@@ -98,9 +99,9 @@ namespace Collector.Controllers
             else
             {
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
-                if (reportUserByCookie.Success == true)
+                if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LatestMetricsViewModel(service);
+                    var viewModel = new LatestRawViewModel(service);
                     return View(viewModel);
                 }
                 else
@@ -108,6 +109,7 @@ namespace Collector.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
+
         }
 
     }

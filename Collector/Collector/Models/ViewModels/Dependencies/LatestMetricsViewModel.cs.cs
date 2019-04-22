@@ -14,7 +14,7 @@ namespace Collector.Models.ViewModels.Dependencies
 
         public LatestMetricsViewModel(ICustomTelemetryService customTelemetryService)
         {
-            this.aggregateDependencyDurations = customTelemetryService.GetDependencyDurations(1);
+            this.aggregateDependencyDurations = customTelemetryService.GetLatestDependencyDurations();
         }
     }
 }

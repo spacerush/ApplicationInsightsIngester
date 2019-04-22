@@ -73,5 +73,24 @@ namespace Collector.Services
             }
             return results;
         }
+
+        public List<AggregateDependencyDuration> GetLatestDependencyDurations()
+        {
+            // TODO: use better method than getting last hour worth of stuff to throw it all away except for the most recent thing!
+            var results = GetDependencyDurations(1);
+            results = results.OrderByDescending(o => o.TimeStamp).Take(1).ToList();
+            return results;
+        }
+
+        public List<string> GetRawEvents(int hours)
+        {
+            List<string> results = new List<string>();
+            var matches = this.repositoryWrapper.TelemetryRepository.GetAll<TelemetryContainer>(f => f.AddedAtUtc >= DateTime.UtcNow.AddHours(-1 * hours)).ToList();
+            foreach (var item in matches.OrderByDescending(o => o.UtcDate))
+            {
+                results.Add(item.TelemetryData);
+            }
+            return results;
+        }
     }
 }

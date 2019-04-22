@@ -44,6 +44,14 @@
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="@Url.Action("Index","Raw")">Raw Events</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="@Url.Action("Latest", "Raw")">Latest</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("LastHour", "Raw")">Last Hour</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("LastDay", "Raw")">Last Day</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle" href="@Url.Action("Index","Charts")">Charts and Graphs</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Daily</a></li>
@@ -57,7 +65,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
