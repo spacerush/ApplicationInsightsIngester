@@ -153,6 +153,13 @@ namespace Collector.Services
             reject.Key = keyData;
             reject.TelemetryData = telemetryData;
             reject.RejectionReason = reason;
+            this.repositoryWrapper.RejectedTelemetryRepository.AddOne<RejectedTelemetry>(reject);
+        }
+
+        public List<RejectedTelemetry> GetRejectedTelemetry(int hours)
+        {
+            var matches = this.repositoryWrapper.RejectedTelemetryRepository.GetAll<RejectedTelemetry>(f => f.AddedAtUtc >= DateTime.UtcNow.AddHours(-1 * hours)).ToList();
+            return matches;
         }
 
     }

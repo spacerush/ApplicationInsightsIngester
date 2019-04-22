@@ -31,5 +31,7 @@ namespace Collector.Services
 
         void LogRejectedTelemetry(string applicationId, string keyData, string telemetryData, string reason);
 
+        List<RejectedTelemetry> GetRejectedTelemetry(int hours);
+
     }
 }

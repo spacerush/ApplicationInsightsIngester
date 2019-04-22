@@ -14,6 +14,7 @@ namespace Collector.Repositories
         IRepositoryBase<CollectorUser> UserRepository { get; }
         IRepositoryBase<WebSession> WebSessionRepository { get; }
 
+        IRepositoryBase<RejectedTelemetry> RejectedTelemetryRepository { get; }
 
     }
 }
