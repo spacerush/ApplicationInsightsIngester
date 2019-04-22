@@ -47,7 +47,7 @@ namespace Collector.Controllers
             else
             {
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
-                if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
+                if (reportUserByCookie.Success == true)
                 {
                     var viewModel = new DailyChartViewModel(service);
                     return View(viewModel);
@@ -72,7 +72,7 @@ namespace Collector.Controllers
             else
             {
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
-                if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
+                if (reportUserByCookie.Success == true)
                 {
                     var viewModel = new WeeklyChartViewModel(service);
                     return View(viewModel);
