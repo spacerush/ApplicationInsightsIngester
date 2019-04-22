@@ -27,6 +27,14 @@ namespace Collector
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCookieManager(options =>
+            {
+                options.AllowEncryption = false;
+                options.ThrowForPartialCookies = true;
+                options.ChunkSize = null;
+                options.DefaultExpireTimeInDays = 7;
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -36,9 +44,9 @@ namespace Collector
 
             var client = new MongoClient("mongodb://localhost:27017/AppTelemetry");
             services.AddSingleton<IMongoClient>(c => client);
-
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

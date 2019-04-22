@@ -1,0 +1,11 @@
+﻿@model Collector.Models.ViewModels.AccountIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>@Model.Message</p>
+
+<a href="@Url.Action("Logout", "Account")">Log out of this account</a>
