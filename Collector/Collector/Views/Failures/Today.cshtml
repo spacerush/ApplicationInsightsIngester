@@ -1,0 +1,29 @@
+﻿@model Collector.Models.ViewModels.Failures.LastDayFailuresViewModel
+
+@{
+    ViewData["Title"] = "Last Day Raw Events";
+}
+
+<h1>Last Day - Rejected Telemetry</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Date and time</th>
+            <th>Application Id</th>
+            <th>Supplied Key</th>
+            <th>Rejection Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RejectedTelemetries.OrderByDescending(o => o.AddedAtUtc))
+        {
+            <tr>
+                <td>@item.AddedAtUtc.ToShortDateString() @item.AddedAtUtc.ToShortTimeString()</td>
+                <td>@item.ApplicationId</td>
+                <td>@item.Key</td>
+                <td>@item.RejectionReason</td>
+            </tr>
+        }
+    </tbody>
+</table>

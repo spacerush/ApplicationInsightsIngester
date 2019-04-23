@@ -1,0 +1,23 @@
+﻿@model Collector.Models.ViewModels.Raw.LastDayRawViewModel
+
+@{
+    ViewData["Title"] = "Last Day Raw Events";
+}
+
+<h1>Last Day - Raw Items</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Raw Json Report</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RawTelemetry)
+        {
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+    </tbody>
+</table>

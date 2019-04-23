@@ -1,0 +1,51 @@
+﻿@model Collector.Models.ViewModels.ManageKeys.ShowKeysViewModel
+
+@{
+    ViewData["Title"] = "Application Keys";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Application Keys</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>Added Date</td>
+                <td>Added By</td>
+                <td>Application Id</td>
+                <td>Key Data</td>
+                <td>Expired</td>
+                <td>Expire reason</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TelemetryKeys)
+            {
+                <tr>
+                    <td>@item.AddedAtUtc.ToShortDateString() @item.AddedAtUtc.ToShortTimeString()</td>
+                    <td>@item.UsernameWhoAdded</td>
+                    <td>@item.ApplicationId</td>
+                    <td>@item.KeyData</td>
+                    <td>
+                        @if (item.Expired == true)
+                        {
+                            @item.Expired
+                        }
+                        else
+                        {
+                            <form method="post" action="@Url.Action("ShowKeys", "ManageKeys")">
+                                <button class="btn btn-danger" value="@item.Id" name="expireKey">Expire it</button>
+                            </form>
+                        }
+                    </td>
+                    <td>@item.ExpireReason</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form method="post" action="@Url.Action("ShowKeys", "ManageKeys")">
+        <label for="newAppId">
+            <input class="form-control" type="text" name="newAppId" id="newAppId" />
+        </label>
+        <button class="btn btn-primary" type="submit">Create New Key</button>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+﻿@model Collector.Models.ViewModels.Dependencies.LastDayMetricsViewModel
+
+@{
+    ViewData["Title"] = "Last Day Dependency Metrics";
+}
+
+<h1>Last Day - Dependency Metrics</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Application Reporting</th>
+            <th>Time reported (UTC)</th>
+            <th>Type</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Sum</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AggregateDependencyDurations.OrderByDescending(o => o.TimeStamp))
+        {
+            <tr>
+                <td>@item.ApplicationId</td>
+                <td>@item.TimeStamp.UtcDateTime.ToShortDateString() @item.TimeStamp.UtcDateTime.ToShortTimeString()</td>
+                <td>@item.DependencyType</td>
+                <td>@item.Min</td>
+                <td>@item.Max</td>
+                <td>@item.Sum</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
