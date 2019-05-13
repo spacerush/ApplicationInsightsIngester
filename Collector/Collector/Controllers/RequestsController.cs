@@ -52,8 +52,57 @@ namespace Collector.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
+        }
+
+
+        public IActionResult Daily()
+        {
+            string sessionId = this.cookie.Get("TelemetrySession");
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
+                if (reportUserByCookie.Success == true)
+                {
+                    var viewModel = new RequestsDailyViewModel(telemetryRetrievalService);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
 
         }
+
+
+        public IActionResult Weekly()
+        {
+            string sessionId = this.cookie.Get("TelemetrySession");
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
+                if (reportUserByCookie.Success == true)
+                {
+                    var viewModel = new RequestsWeeklyViewModel(telemetryRetrievalService);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+
+        }
+
+
 
     }
 }

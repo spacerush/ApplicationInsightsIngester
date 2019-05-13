@@ -121,26 +121,29 @@ namespace Collector.Services
 
                     foreach (dynamic telem in telemetryItems)
                     {
-                        RequestPayload requestPayload = new RequestPayload();
-                        requestPayload.Metadata = new RequestPayloadMetadata();
-                        requestPayload.Metadata.Level = telem.Level;
-                        requestPayload.Metadata.Timestamp = telem.Timestamp;
-                        requestPayload.TelemetryType = telem.Payload.TelemetryType;
-                        requestPayload.Name = telem.Payload.Name;
-                        requestPayload.Duration = telem.Payload.Duration;
-                        requestPayload.Id = telem.Payload.Id;
-                        requestPayload.ResponseCode = telem.Payload.ResponseCode;
-                        requestPayload.Success = telem.Payload.Success;
-                        requestPayload.Url = telem.Payload.Url;
-                        requestPayload.DeveloperMode = telem.Payload.DeveloperMode;
-                        requestPayload.ai_component_version = telem.Payload.ai_component_version;
-                        requestPayload.ai_cloud_role_instance = telem.Payload.ai_cloud_role_instance;
-                        requestPayload.ai_operation_id = telem.Payload.ai_operation_id;
-                        requestPayload.ai_operation_name = telem.Payload.ai_operation_name;
-                        requestPayload.ai_location_ip = telem.Payload.ai_location_ip;
-                        requestPayload.ai_DeveloperMode = telem.Payload.ai_DeveloperMode;
-                        requestPayload.ServerName = telem.Payload.ServerName;
-                        results.Add(requestPayload);
+                        if (telem.Payload.TelemetryType == "request")
+                        {
+                            RequestPayload requestPayload = new RequestPayload();
+                            requestPayload.Metadata = new RequestPayloadMetadata();
+                            requestPayload.Metadata.Level = telem.Level;
+                            requestPayload.Metadata.Timestamp = telem.Timestamp;
+                            requestPayload.TelemetryType = telem.Payload.TelemetryType;
+                            requestPayload.Name = telem.Payload.Name;
+                            requestPayload.Duration = telem.Payload.Duration;
+                            requestPayload.Id = telem.Payload.Id;
+                            requestPayload.ResponseCode = telem.Payload.ResponseCode;
+                            requestPayload.Success = telem.Payload.Success;
+                            requestPayload.Url = telem.Payload.Url;
+                            requestPayload.DeveloperMode = telem.Payload.DeveloperMode;
+                            requestPayload.ai_component_version = telem.Payload.ai_component_version;
+                            requestPayload.ai_cloud_role_instance = telem.Payload.ai_cloud_role_instance;
+                            requestPayload.ai_operation_id = telem.Payload.ai_operation_id;
+                            requestPayload.ai_operation_name = telem.Payload.ai_operation_name;
+                            requestPayload.ai_location_ip = telem.Payload.ai_location_ip;
+                            requestPayload.ai_DeveloperMode = telem.Payload.ai_DeveloperMode;
+                            requestPayload.ServerName = telem.Payload.ServerName;
+                            results.Add(requestPayload);
+                        }
                     }
                 }
             }
