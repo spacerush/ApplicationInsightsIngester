@@ -5,8 +5,12 @@
 }
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#requestPayloadsTable').DataTable();
+    $(document).ready(function () {
+        var table = $('#requestPayloadsTable').DataTable(
+            {
+                "order": [[0, "desc"]]
+            }
+        );
     });
 </script>
 
