@@ -7,6 +7,7 @@ namespace Collector.Models
 {
     public class RequestPayload
     {
+        public RequestPayloadMetadata Metadata { get; set; }
         public string TelemetryType { get; set; }
         public string Name { get; set; }
         public TimeSpan Duration { get; set; }

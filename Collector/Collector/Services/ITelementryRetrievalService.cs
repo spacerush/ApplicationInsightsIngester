@@ -23,6 +23,8 @@ namespace Collector.Services
 
         List<AggregateDependencyDuration> GetLatestDependencyDurations();
 
+        List<RequestPayload> GetRequestPayloads(DateTime startDateTime, DateTime endDateTime);
+
         List<RejectedTelemetry> GetRejectedTelemetry(int hours);
 
     }

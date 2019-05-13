@@ -1,0 +1,25 @@
+﻿@model Collector.Models.ViewModels.Requests.RequestsIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#requestPayloadsTable').DataTable();
+    });
+</script>
+
+<h1>Index</h1>
+
+<table class="table table-striped table-bordered" id="requestPayloadsTable">
+    <thead>
+        <tr><th>Timestamp</th><th>Url</th><th>Name</th><th>Total Milliseconds</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RequestPayloads.OrderByDescending(o => o.Metadata.Timestamp))
+        {
+            <tr><td>@item.Metadata.Timestamp</td><td>@item.Url</td><td>@item.Name</td><td>@item.Duration.TotalMilliseconds</td></tr>
+        }
+    </tbody>
+</table>

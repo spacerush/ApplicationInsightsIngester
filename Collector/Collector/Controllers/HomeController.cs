@@ -14,9 +14,10 @@ namespace Collector.Controllers
     {
         private readonly ICustomTelemetryService customTelemetryService;
         private readonly ITelemetryRetrievalService telemetryRetrievalService;
-        public HomeController(ICustomTelemetryService service, ITelemetryRetrievalService retrievalService)
+        public HomeController(ICustomTelemetryService customTelemetryService, ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.customTelemetryService = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
         }
 
         public IActionResult Index()
