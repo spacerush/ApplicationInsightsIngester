@@ -13,9 +13,9 @@ namespace Collector.Models.ViewModels.Failures
         private readonly List<RejectedTelemetry> rejectedTelemetries;
         public List<RejectedTelemetry> RejectedTelemetries { get { return this.rejectedTelemetries; } }
 
-        public LastDayFailuresViewModel(ICustomTelemetryService customTelemetryService)
+        public LastDayFailuresViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.rejectedTelemetries = customTelemetryService.GetRejectedTelemetry(24);
+            this.rejectedTelemetries = telemetryRetrievalService.GetRejectedTelemetry(24);
         }
     }
 }

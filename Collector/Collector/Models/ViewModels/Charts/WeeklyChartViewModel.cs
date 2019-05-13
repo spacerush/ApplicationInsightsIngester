@@ -8,7 +8,7 @@ namespace Collector.Models.ViewModels.Raw
 {
     public class WeeklyChartViewModel
     {
-        public WeeklyChartViewModel(ICustomTelemetryService customTelemetryService)
+        public WeeklyChartViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
         }
     }

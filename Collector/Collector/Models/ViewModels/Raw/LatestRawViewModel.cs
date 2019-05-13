@@ -10,7 +10,7 @@ namespace Collector.Models.ViewModels.Raw
     {
 
 
-        public LatestRawViewModel(ICustomTelemetryService customTelemetryService)
+        public LatestRawViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
 
         }

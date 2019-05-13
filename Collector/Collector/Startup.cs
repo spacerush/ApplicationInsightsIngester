@@ -46,6 +46,8 @@ namespace Collector
             services.AddSingleton<IMongoClient>(c => client);
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();
+            services.AddTelemetryRetrievalService();
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -69,7 +71,6 @@ namespace Collector
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {

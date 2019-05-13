@@ -9,13 +9,13 @@ namespace Collector.Models.ViewModels.ManageKeys
 {
     public class ShowKeysViewModel
     {
-        private readonly ICustomTelemetryService customTelemetryService;
+        private readonly ITelemetryRetrievalService telementryRetrievalService;
         public List<TelemetryKey> TelemetryKeys { get; set; }
 
-        public ShowKeysViewModel(ICustomTelemetryService customTelemetryService)
+        public ShowKeysViewModel(ITelemetryRetrievalService telementryRetrievalService)
         {
-            this.customTelemetryService = customTelemetryService;
-            this.TelemetryKeys = this.customTelemetryService.GetAllTelemetryKeys();
+            this.telementryRetrievalService = telementryRetrievalService;
+            this.TelemetryKeys = this.telementryRetrievalService.GetAllTelemetryKeys();
 
         }
     }

@@ -19,6 +19,12 @@ namespace Collector
         {
             services.AddScoped<ICustomTelemetryService, CustomTelemetryService>();
         }
+
+        public static void AddTelemetryRetrievalService(this IServiceCollection services)
+        {
+            services.AddScoped<ITelemetryRetrievalService, TelemetryRetrievalService>();
+        }
+
     }
 
 }

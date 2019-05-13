@@ -11,18 +11,6 @@ namespace Collector.Services
     {
         void RecordTelemetry(string telemetry, string applicationId);
 
-        List<AggregateDependencyDuration> GetDependencyDurations(int hours);
-
-        List<AggregateDependencyDuration> GetLatestDependencyDurations();
-
-        long CountTelemetry();
-
-        List<string> GetRawEvents(int hours);
-
-        List<TelemetryMetadata> GetMetadata(int hours);
-
-        List<TelemetryKey> GetAllTelemetryKeys();
-
         void AddTelemetryKey(string applicationId, string username);
 
         bool CheckTelemetryKey(string applicationId, string keyData);
@@ -31,7 +19,6 @@ namespace Collector.Services
 
         void LogRejectedTelemetry(string applicationId, string keyData, string telemetryData, string reason);
 
-        List<RejectedTelemetry> GetRejectedTelemetry(int hours);
 
     }
 }
