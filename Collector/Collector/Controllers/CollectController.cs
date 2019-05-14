@@ -36,7 +36,7 @@ namespace Collector.Controllers
                 telemetryHubContext.Clients.All.ReceiveMessage(new Dto.MessageEnvelope(payloads.Count.ToString() + " request payloads delivered to telemetry service."));
                 foreach (var item in payloads)
                 {
-                    telemetryHubContext.Clients.All.ReceiveMessage(new Dto.MessageEnvelope(item.TelemetryApplicationId + " responded with " + item.ResponseCode + " for request to " + item.Url));
+                    telemetryHubContext.Clients.All.ReceiveMessage(new Dto.MessageEnvelope(item.TelemetryApplicationId + " responded with " + item.ResponseCode + " to a request that took " + item.Duration.TotalMilliseconds + " ms to complete on server " + item.ServerName));
                 }
                 var acceptedResponse = new AcceptedResponse();
                 acceptedResponse.itemsAccepted = 1;
