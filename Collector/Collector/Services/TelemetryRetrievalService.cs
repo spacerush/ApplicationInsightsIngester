@@ -124,6 +124,8 @@ namespace Collector.Services
                         if (telem.Payload.TelemetryType == "request")
                         {
                             RequestPayload requestPayload = new RequestPayload();
+                            requestPayload.TelemetryApplicationId = item.ApplicationId;
+                            requestPayload.CollectionDateTimeOffset = item.UtcDate;
                             requestPayload.Metadata = new RequestPayloadMetadata();
                             requestPayload.Metadata.Level = telem.Level;
                             requestPayload.Metadata.Timestamp = telem.Timestamp;
