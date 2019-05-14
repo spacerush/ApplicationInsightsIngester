@@ -9,7 +9,7 @@ namespace Collector.Services
 {
     public interface ICustomTelemetryService
     {
-        void RecordTelemetry(string telemetry, string applicationId);
+        Guid RecordTelemetry(string telemetry, string applicationId);
 
         void AddTelemetryKey(string applicationId, string username);
 

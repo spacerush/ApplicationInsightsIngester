@@ -25,6 +25,8 @@ namespace Collector.Services
 
         List<RequestPayload> GetRequestPayloads(DateTime startDateTime, DateTime endDateTime);
 
+        List<RequestPayload> GetRequestPayloadById(Guid telemetryId);
+
         List<RejectedTelemetry> GetRejectedTelemetry(int hours);
 
     }

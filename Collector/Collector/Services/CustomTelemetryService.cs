@@ -19,13 +19,14 @@ namespace Collector.Services
             this.repositoryWrapper = repositoryWrapper;
         }
 
-        public void RecordTelemetry(string telemetry, string applicationId)
+        public Guid RecordTelemetry(string telemetry, string applicationId)
         {
             TelemetryContainer telemetryContainer = new TelemetryContainer();
             telemetryContainer.TelemetryData = telemetry;
             telemetryContainer.UtcDate = DateTime.UtcNow;
             telemetryContainer.ApplicationId = applicationId;
             this.repositoryWrapper.TelemetryRepository.AddOne<TelemetryContainer>(telemetryContainer);
+            return telemetryContainer.Id;
         }
 
         
