@@ -16,14 +16,16 @@ namespace Collector.Controllers
 {
     public class ManageKeysController : Controller
     {
-        private readonly ICustomTelemetryService service;
+        private readonly ICustomTelemetryService customTelemetryService;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
 
-        public ManageKeysController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public ManageKeysController(ICustomTelemetryService customTelemetryService, ITelemetryRetrievalService telemetryRetrievalService, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
-            this.service = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
             this.authenticationService = authenticationService;
             this.cookie = cookie;
             this.cookieManager = cookieManager;
@@ -31,7 +33,7 @@ namespace Collector.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 
@@ -55,13 +57,13 @@ namespace Collector.Controllers
                     if (reportUserByCookie.User.IsOrganizationAdmin)
                     {
                         if (!(string.IsNullOrEmpty(expireKey))) {
-                            this.service.ExpireTelemetryKey(Guid.Parse(expireKey));
+                            this.customTelemetryService.ExpireTelemetryKey(Guid.Parse(expireKey));
                         }
                         if (!(string.IsNullOrEmpty(newAppId))) {
-                            this.service.AddTelemetryKey(newAppId, reportUserByCookie.User.Username);
+                            this.customTelemetryService.AddTelemetryKey(newAppId, reportUserByCookie.User.Username);
                         }
                     }
-                    var viewModel = new ShowKeysViewModel(service);
+                    var viewModel = new ShowKeysViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else

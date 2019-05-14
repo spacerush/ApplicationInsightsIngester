@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Collector.Hubs;
 using Collector.Services;
+using Collector.Workers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,9 +48,16 @@ namespace Collector
             services.AddSingleton<IMongoClient>(c => client);
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();
+            services.AddTelemetryRetrievalService();
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSignalR();
+
+            services.AddHostedService<CurrentTimeWorker>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +78,6 @@ namespace Collector
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
@@ -77,6 +85,12 @@ namespace Collector
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSignalR(router =>
+            {
+                router.MapHub<TelemetryHub>("/TelemetryHub");
+            });
+
         }
     }
 }

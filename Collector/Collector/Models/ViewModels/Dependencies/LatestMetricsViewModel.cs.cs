@@ -12,9 +12,9 @@ namespace Collector.Models.ViewModels.Dependencies
         private readonly List<AggregateDependencyDuration> aggregateDependencyDurations;
         public List<AggregateDependencyDuration> AggregateDependencyDurations { get { return this.aggregateDependencyDurations; } }
 
-        public LatestMetricsViewModel(ICustomTelemetryService customTelemetryService)
+        public LatestMetricsViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.aggregateDependencyDurations = customTelemetryService.GetLatestDependencyDurations();
+            this.aggregateDependencyDurations = telemetryRetrievalService.GetLatestDependencyDurations();
         }
     }
 }

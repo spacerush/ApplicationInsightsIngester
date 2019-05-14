@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<script src="~/js/signalr.min.js"></script>
+<script type="text/javascript">
+
+    class MessageEnvelope {
+
+        constructor(obj) {
+            obj && Object.assign(this, obj);
+        }
+
+        getId() {
+            return `${this.messageId}`;
+        }
+
+        getMessage() {
+            return `${this.dateTimeUtc} ${this.message}`;
+        }
+
+    }
+
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/TelemetryHub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on("ReceiveMessage", (obj) => {
+        var openEnvelope = new MessageEnvelope(obj);
+        toAppend = '<div id="message' + openEnvelope.getId() + '" class="alert alert-info">' + openEnvelope.getMessage() + '</div>';
+        $('#monitor').prepend(toAppend);
+        setTimeout(function () {
+            $('#message' + openEnvelope.getId()).fadeOut(500, function () { $(this).remove(); });
+        }, 121000);
+    });
+    connection.start().then(function () {
+        console.log("connected");
+    });
+</script>
+
+<h1>Index</h1>
+
+<div id="monitor">
+
+</div>

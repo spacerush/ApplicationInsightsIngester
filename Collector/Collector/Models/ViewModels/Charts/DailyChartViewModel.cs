@@ -38,9 +38,9 @@ namespace Collector.Models.ViewModels.Raw
             }
         }
 
-        public DailyChartViewModel(ICustomTelemetryService customTelemetryService)
+        public DailyChartViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.metadata = customTelemetryService.GetMetadata(24);
+            this.metadata = telemetryRetrievalService.GetMetadata(24);
 
         }
     }

@@ -12,9 +12,9 @@ namespace Collector.Models.ViewModels.Raw
         private readonly List<string> rawTelemetry;
         public List<string> RawTelemetry { get { return this.rawTelemetry; } }
 
-        public LastHourRawViewModel(ICustomTelemetryService customTelemetryService)
+        public LastHourRawViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.rawTelemetry = customTelemetryService.GetRawEvents(1);
+            this.rawTelemetry = telemetryRetrievalService.GetRawEvents(1);
         }
     }
 }

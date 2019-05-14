@@ -12,16 +12,17 @@ namespace Collector.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICustomTelemetryService service;
-
-        public HomeController(ICustomTelemetryService service)
+        private readonly ICustomTelemetryService customTelemetryService;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
+        public HomeController(ICustomTelemetryService customTelemetryService, ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.service = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 

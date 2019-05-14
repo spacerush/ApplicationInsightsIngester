@@ -16,14 +16,16 @@ namespace Collector.Controllers
 {
     public class FailuresController : Controller
     {
-        private readonly ICustomTelemetryService service;
+        private readonly ICustomTelemetryService customTelemetryService;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
 
-        public FailuresController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public FailuresController(ITelemetryRetrievalService telemetryRetrievalService, ICustomTelemetryService customTelemetryService, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
-            this.service = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
             this.authenticationService = authenticationService;
             this.cookie = cookie;
             this.cookieManager = cookieManager;
@@ -31,7 +33,7 @@ namespace Collector.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 
@@ -50,7 +52,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LastDayFailuresViewModel(service);
+                    var viewModel = new LastDayFailuresViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else

@@ -15,14 +15,14 @@ namespace Collector.Controllers
 {
     public class RawController : Controller
     {
-        private readonly ICustomTelemetryService service;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
 
-        public RawController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public RawController(ITelemetryRetrievalService telemetryRetrievalService, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
-            this.service = service;
+            this.telemetryRetrievalService = telemetryRetrievalService;
             this.authenticationService = authenticationService;
             this.cookie = cookie;
             this.cookieManager = cookieManager;
@@ -30,7 +30,7 @@ namespace Collector.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 
@@ -49,7 +49,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LastHourRawViewModel(service);
+                    var viewModel = new LastHourRawViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
@@ -75,7 +75,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LastDayRawViewModel(service);
+                    var viewModel = new LastDayRawViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
@@ -101,7 +101,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true && reportUserByCookie.User.IsOrganizationAdmin)
                 {
-                    var viewModel = new LatestRawViewModel(service);
+                    var viewModel = new LatestRawViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else

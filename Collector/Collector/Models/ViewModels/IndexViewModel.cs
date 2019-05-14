@@ -15,9 +15,9 @@ namespace Collector.Models.ViewModels
                 return this.telemetryCount;
             }
         }
-        public IndexViewModel(ICustomTelemetryService customTelemetryService)
+        public IndexViewModel(ITelemetryRetrievalService telemetryRetrievalService)
         {
-            this.telemetryCount = customTelemetryService.CountTelemetry();
+            this.telemetryCount = telemetryRetrievalService.CountTelemetry();
         }
     }
 }

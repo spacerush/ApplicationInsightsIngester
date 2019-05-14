@@ -15,14 +15,16 @@ namespace Collector.Controllers
 {
     public class DependenciesController : Controller
     {
-        private readonly ICustomTelemetryService service;
+        private readonly ICustomTelemetryService customTelemetryService;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
 
-        public DependenciesController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public DependenciesController(ICustomTelemetryService customTelemetryService, ITelemetryRetrievalService telemetryRetrievalService, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
-            this.service = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
             this.authenticationService = authenticationService;
             this.cookie = cookie;
             this.cookieManager = cookieManager;
@@ -30,7 +32,7 @@ namespace Collector.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 
@@ -49,7 +51,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    var viewModel = new LastHourMetricsViewModel(service);
+                    var viewModel = new LastHourMetricsViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
@@ -75,7 +77,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    var viewModel = new LastDayMetricsViewModel(service);
+                    var viewModel = new LastDayMetricsViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
@@ -100,7 +102,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    var viewModel = new LatestMetricsViewModel(service);
+                    var viewModel = new LatestMetricsViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else

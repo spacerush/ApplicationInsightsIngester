@@ -15,14 +15,16 @@ namespace Collector.Controllers
 {
     public class ChartsController : Controller
     {
-        private readonly ICustomTelemetryService service;
+        private readonly ICustomTelemetryService customTelemetryService;
+        private readonly ITelemetryRetrievalService telemetryRetrievalService;
         private readonly IAuthenticationService authenticationService;
         private readonly ICookie cookie;
         private readonly ICookieManager cookieManager;
 
-        public ChartsController(ICustomTelemetryService service, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public ChartsController(ICustomTelemetryService customTelemetryService, ITelemetryRetrievalService telemetryRetrievalService, IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
         {
-            this.service = service;
+            this.customTelemetryService = customTelemetryService;
+            this.telemetryRetrievalService = telemetryRetrievalService;
             this.authenticationService = authenticationService;
             this.cookie = cookie;
             this.cookieManager = cookieManager;
@@ -30,7 +32,7 @@ namespace Collector.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel(service);
+            var viewModel = new IndexViewModel(telemetryRetrievalService);
             return View(viewModel);
         }
 
@@ -49,7 +51,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    var viewModel = new DailyChartViewModel(service);
+                    var viewModel = new DailyChartViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
@@ -74,7 +76,7 @@ namespace Collector.Controllers
                 GetUserByCookieResponse reportUserByCookie = this.authenticationService.GetUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    var viewModel = new WeeklyChartViewModel(service);
+                    var viewModel = new WeeklyChartViewModel(telemetryRetrievalService);
                     return View(viewModel);
                 }
                 else
