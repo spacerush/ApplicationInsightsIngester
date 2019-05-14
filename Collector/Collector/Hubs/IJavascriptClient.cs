@@ -9,5 +9,7 @@ namespace Collector.Hubs
     public interface IJavascriptClient
     {
         Task ReceiveMessage(MessageEnvelope obj);
+
+        Task ReceiveDatapoint(AppDatapoint obj);
     }
 }
