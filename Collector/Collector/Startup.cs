@@ -88,7 +88,7 @@ namespace Collector
 
             app.UseSignalR(router =>
             {
-                router.MapHub<TelemetryHub>(Configuration["pathBase"] + "/TelemetryHub");
+                router.MapHub<TelemetryHub>("/TelemetryHub");
             });
 
         }
