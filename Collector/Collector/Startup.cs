@@ -44,7 +44,7 @@ namespace Collector
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var client = new MongoClient("mongodb://localhost:27017/AppTelemetry");
+            var client = new MongoClient("mongodb://mongo/AppTelemetry");
             services.AddSingleton<IMongoClient>(c => client);
             services.ConfigureRepositoryWrapper();
             services.AddCustomTelemetryService();
